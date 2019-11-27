@@ -1,46 +1,24 @@
 import React from 'react'
-import { useUsers } from '../hooks'
-import "../styles/invite.css"
-import Icon from '../lib/Icon'
-import { Link } from 'react-router-dom'
+import { useInvite } from '../hooks'
 
-
-
-const Invite = props => {
-    const { users } = useUsers()
+export default props => {
+    const { random, go, nogo, loading, going, notgoing } = useInvite()
 
     return (
-        <div className="container">
-            <header className="top">
-                <p>Going:</p>
-                <p>Not Going:</p>
-            </header>
-            <div className="singleUser">
-                {users.map((user, i) => (
-                    <div key={`User-${i}`}>
-                        <div className="pic">
-                            <img className="userPicture" src={user.picture.large} />
-                        </div>
-                        <div className="information">
-                            <div className="userName">
-                                <p><b>Name:</b> {user.name.first + " " + user.name.last}</p>
-                            </div>
-                            <div className="userPhone">
-                                <p><b>Phone:</b> {user.cell} </p>
-                            </div>
-                            <div className="userEmail">
-                                <p><b>Email:</b> {user.email} </p>
-                            </div>
-                        </div>
-                        <div className="confirm">
-                            <button id="notGoing"><Link to="./NotGoing"><Icon icon="times"></Icon></Link></button>
-                            <button id="going"><Link to="./Going"><Icon icon="check"></Icon></Link></button>
-                        </div>
-                    </div>
-            ))}
+        <div className="main">
+            <p>Going: {going.length} Not Going: {notgoing.length}</p>
+            {loading ? <p>Loading...</p>
+            :
+            <div className="person">
+                <p><img src={random.picture} /> </p>
+                <p>Name: {random.fname} {random.lname}</p>
+                <p>Phone: {random.phone}</p>
+                <p>Email: {random.email}</p>
+
+                <button onClick={e => go(random)}>Go</button>
+                <button onClick={e => nogo(random)}>No Go</button>
             </div>
-        </div>  
+            }
+        </div>
     )
 }
-
-export default Invite

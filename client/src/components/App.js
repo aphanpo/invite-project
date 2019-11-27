@@ -1,25 +1,26 @@
-import React from "react"
-import { useUsers } from "../hooks"
-import Invite from './Invite'
+import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from '../redux/store'
-// import Going from './Going'
+
+import Invite from './Invite'
+import Going from './Going'
+import NotGoing from './NotGoing'
 
 
 function App() {
-  const { users } = useUsers()
-
-  console.log(users)
-
   return (
     <Router>
-    <Provider store={store}>
-        <div>
-          <Invite />
-          {/* <Going /> */}
-        </div>
-    </Provider>
+      <div>
+
+        <ul className="nav">
+          <li><Link to="">Invite</Link></li>
+          <li><Link to="/going">Going</Link></li>
+          <li><Link to="/notgoing">Not Going</Link></li>
+        </ul>
+        <Route path="/" exact component={Invite} />
+        <Route path="/going" component={Going} />
+        <Route path="/notgoing" component={NotGoing} />
+
+      </div>
     </Router>
   )
 }
